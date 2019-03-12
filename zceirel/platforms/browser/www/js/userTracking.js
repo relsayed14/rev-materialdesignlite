@@ -15,18 +15,23 @@ function showPosition(position) {
 		mymap.removeLayer(userMarker);
 	}
 
-	userMarker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap).bindPopup("<b>You were here</b>");
+	userMarker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap).bindPopup("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
 	getDistance();
 	
 }
 
-// calculate distance between user and point(s) 
+// calculate distance between user and multiplepoint(s) 
 function getDistance() {
 	// alert('getting distance...');
 	//getDistanceFromPoint is the function called once distance has been found
 	navigator.geolocation.getCurrentPosition(getDistanceFromMultiplePoints);
 }
 
+// calculate distance between user and point(s) 
+function getSetDistance() {
+	//getDistanceFromPoint is the function called once distance has been found
+	navigator.geolocation.getCurrentPosition(getDistanceFromPoint);
+}
 // get distance only from the pre-definied point
 function getDistanceFromPoint(position) {
 	//find the coordinates of a point using this website: https://getlatlong.net
@@ -36,9 +41,8 @@ function getDistanceFromPoint(position) {
 
 	//returnt the distance in kilometres
 	var distance = calculateDistance(position.coords.latitude, position.coords.longitude,lat,lng,"K");
-	if (distance < 0.1) {
-		alert("You are within 100m from the destination.")
-	}
+	alert("You are within " + distance/100 + " m from point.")
+	
 }
 
 
