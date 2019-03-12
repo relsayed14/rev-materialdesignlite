@@ -15,19 +15,19 @@ function showPosition(position) {
 		mymap.removeLayer(userMarker);
 	}
 
-	userMarker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap);
+	userMarker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap).bindPopup("<b>You were here</b>");
 	getDistance();
 	
 }
 
-// calculate distance between user and point 
+// calculate distance between user and point(s) 
 function getDistance() {
 	// alert('getting distance...');
 	//getDistanceFromPoint is the function called once distance has been found
-	navigator.geolocation.getCurrentPosition(getDistanceFromPointMultiplePoints);
-
+	navigator.geolocation.getCurrentPosition(getDistanceFromMultiplePoints);
 }
 
+// get distance only from the pre-definied point
 function getDistanceFromPoint(position) {
 	//find the coordinates of a point using this website: https://getlatlong.net
 	// these are the coordinates for UCL Main Gate
@@ -52,11 +52,11 @@ function getDistanceFromMultiplePoints(position) {
 			closestQuake = obj.properties.place;
 		}
 	}
-	alert("Earthquake: " + closestQuake + " is distance " + minDistance + "away");
+	alert("Earthquake: " + closestQuake + " is " + minDistance + " away");
 }
 
-// code adapted from https://www.htmlgoodies.com/beyond/javascript/calculate-the-distance-between-two-points-in-your-web-apps.html
-function calculateDistance(lat1, lon1, lat2, lon2, unit) {
+//code to get distance adapted from https://www.htmlgoodies.com/beyond/javascript/calculate-the-distance-between-two-points-inyour-web-apps.html
+function calculateDistance(lat1, lon1, lat2, lon2, unit){
 	var radlat1 = Math.PI * lat1/180;
 	var radlat2 = Math.PI * lat2/180;
 	var radlon1 = Math.PI * lon1/180;
@@ -65,11 +65,11 @@ function calculateDistance(lat1, lon1, lat2, lon2, unit) {
 	var radtheta = Math.PI * theta/180;
 	var subAngle = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
 	subAngle = Math.acos(subAngle);
-			subAngle = subAngle * 180/Math.PI; // convert the degree value returned by acos back to degrees from 
-			dist = (subAngle/360) * 2 * Math.PI * 3956; // ((subtended angle in degrees)/360) * 2 * pi * radius )
-							// where radius of the earth is 3956 miles
-			if (unit=="K") { dist = dist * 1.609344 ;} // convert miles to km
-			if (unit=="N") { dist = dist * 0.8684 ;} // convert miles to nautical miles
-			return dist;
-		}
+	subAngle = subAngle * 180/Math.PI; // convert the degree value returned by acos back to degrees from radians
+	dist = (subAngle/360) * 2 * Math.PI * 3956; // ((subtended angle in degrees)/360) * 2 * pi * radius )
+															// where radius of the earth is 3956 miles
+	if (unit=="K") { dist = dist * 1.609344 ;} // convert miles to km
+	if (unit=="N") { dist = dist * 0.8684 ;} // convert miles to nautical miles
+	return dist;
+}
 
