@@ -78,7 +78,7 @@ function loadGeoJSONLayer(earthquakedata) {
     mymap.fitBounds(geojsonLayer.getBounds());
 }
 
-// Adding custom red maker
+		// Adding custom red maker
 		var testMarkerRed = L.AwesomeMarkers.icon({
 			icon:'play',
 			markerColor:'red'
@@ -90,4 +90,9 @@ function loadGeoJSONLayer(earthquakedata) {
 			markerColor:'pink'
 		});
 
+// Code to run when remove Data button is clicked
+function removeEarthquakeData() {
+   	alert("Earthquake data will be removed");
+   	mymap.removeLayer(earthquakelayer);
+ }
 
