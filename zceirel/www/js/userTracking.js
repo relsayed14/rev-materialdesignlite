@@ -41,7 +41,7 @@ function getDistanceFromPoint(position) {
 
 	//returnt the distance in kilometres
 	var distance = calculateDistance(position.coords.latitude, position.coords.longitude,lat,lng,"K");
-	alert("You are within " + distance/100 + " m from point.")
+	alert("You are within " + distance*100 + " m from point.")
 	
 }
 
