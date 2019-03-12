@@ -58,8 +58,36 @@ function loadGeoJSONLayer(earthquakedata) {
     earthquakes = earthquakejson;
 
     // add the JSON layer onto the map - it will appear using the default icons
-    geojsonLayer = L.geoJson(earthquakejson).addTo(mymap);
+    geojsonLayer = L.geoJson(earthquakejson, {
+		//use point to layer to create the points
+		pointToLayer: function(feature,latlng)
+		{
+			//look at the GeoJSON file - specifically at the properties,to see the earthquake magnitude and use a different marker depending on this value
+			// also incldue a pop up that shows the place value of the earthquakes
+			if(feature.properties.mag > 1.75) {
+				return L.marker(latlng, {icon:testMarkerRed}).bindPopup("<b>"+ feature.properties.place + "</b>");
+			} else {
+				// if mag =< 1.75
+				return L.marker(latlng, {icon:testMarkerPink}).bindPopup("<b>"+ feature.properties.place + "</b>");
+
+			}
+				},
+			}).addTo(mymap);
 
     // change the map zoom so that all the data is shown
     mymap.fitBounds(geojsonLayer.getBounds());
 }
+
+// Adding custom red maker
+		var testMarkerRed = L.AwesomeMarkers.icon({
+			icon:'play',
+			markerColor:'red'
+		});
+
+		// Adding custom pink marker
+		var testMarkerPink = L.AwesomeMarkers.icon({
+			icon:'play',
+			markerColor:'pink'
+		});
+
+
