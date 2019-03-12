@@ -15,19 +15,22 @@ function showPosition(position) {
 		mymap.removeLayer(userMarker);
 	}
 
-	userMarker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap).bindPopup("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
+	// get user coordinates, add to the map, then display them as popup on the map
+	userMarker = L.marker([position.coords.latitude, position.coords.longitude])
+	.addTo(mymap)
+	.bindPopup("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
 	getDistance();
 	
 }
 
-// calculate distance between user and multiplepoint(s) 
+// calculate distance between user and multiplepoints
 function getDistance() {
 	// alert('getting distance...');
 	//getDistanceFromPoint is the function called once distance has been found
 	navigator.geolocation.getCurrentPosition(getDistanceFromMultiplePoints);
 }
 
-// calculate distance between user and point(s) 
+// calculate distance between user and only the selected point
 function getSetDistance() {
 	//getDistanceFromPoint is the function called once distance has been found
 	navigator.geolocation.getCurrentPosition(getDistanceFromPoint);
@@ -42,6 +45,7 @@ function getDistanceFromPoint(position) {
 	//returnt the distance in kilometres
 	var distance = calculateDistance(position.coords.latitude, position.coords.longitude,lat,lng,"K");
 	alert("You are within " + distance*100 + " m from point.")
+	document.getElementById("distancediv").innerHTML = "The distance between the user and the fixed point is " + distance + " km."
 	
 }
 
