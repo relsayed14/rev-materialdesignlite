@@ -44,17 +44,15 @@ function getDistanceFromPoint(position) {
 
 // function to get distance from several points on the layer
 function getDistanceFromMultiplePoints(position) {
-	var minDistance = 100000000000;
-	var closestQuake = "";
-	for(var i=0; i<earthquakes.features.length; i++) {
-		var obj = earthquakes.features[i];
-		var distance = calculateDistance(position.coords.latitude, position.coords.longitude,obj.geometry.coordinates[0],obj.geometry.coordinates[1], "K");
-		if(distance < minDistance) {
+	var minDistance = 100000000000; var closestQuake = "";
+	for(var i = 0; i < earthquakes.features.length; i++) { var obj = earthquakes.features[i];
+		var distance = calculateDistance(position.coords.latitude,
+			position.coords.longitude,obj.geometry.coordinates[0], obj.geometry.coordinates[1], 'K'); if (distance < minDistance){
 			minDistance = distance;
 			closestQuake = obj.properties.place;
 		}
 	}
-	alert("Earthquake: "+ closestQuake + " is distance "+ minDistance + " away.");
+	alert("Earthquake: " + closestQuake + " is distance " + minDistance + "away");
 }
 
 // code adapted from https://www.htmlgoodies.com/beyond/javascript/calculate-the-distance-between-two-points-in-your-web-apps.html
